@@ -1,0 +1,19 @@
+chromadb
+sentence-transformers
+torch
+openai
+python-dotenv
+pypdf
+fastapi
+uvicorn[standard]
+flask
+groq
+# pandas
+# numpy
+# matplotlib
+# seaborn
+jinja2
+python-multipart
+google-generativeai
+numpy
+requests

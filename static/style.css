@@ -1,0 +1,18 @@
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:#0f0f12;color:#e5e5e5;min-height:100vh}
+.container{max-width:1100px;margin:0 auto;padding:24px}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.badge{background:#1e1e24;padding:6px 12px;border-radius:20px;font-size:13px}
+.card{background:#18181f;border:1px solid #2a2a35;border-radius:16px;padding:20px;margin-bottom:20px}
+.upload-zone{border:2px dashed #3a3a4a;border-radius:12px;padding:32px;text-align:center;cursor:pointer;transition:.2s;margin-top:12px}
+.upload-zone:hover{border-color:#7c3aed;background:#1e1b2e}
+.btn{background:#7c3aed;color:white;border:0;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:600}
+.btn:hover{background:#6d28e0}
+.btn-secondary{background:#2a2a35}
+.input{width:100%;background:#101014;border:1px solid #2a2a35;border-radius:10px;padding:14px;color:white;font-size:15px;margin-top:12px}
+.row{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+@media(max-width:800px){.grid3{grid-template-columns:1fr}}
+.answer{white-space:pre-wrap;line-height:1.6}
+.source{font-size:12px;background:#101014;border:1px solid #2a2a35;padding:8px;border-radius:8px;margin-top:8px}
+#uploadResult{margin-top:12px}

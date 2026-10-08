@@ -1,0 +1,1 @@
+RAG combines retrieval with generation. First, documents are chunked and embedded into vector DB like ChromaDB. User query is embedded and top-k similar chunks retrieved via semantic search. Then LLM generates answer grounded on retrieved context, reducing hallucinations.

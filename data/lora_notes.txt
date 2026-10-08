@@ -1,0 +1,1 @@
+LoRA freezes base model and trains low-rank adapters A and B. It reduces trainable parameters by 10,000x. QLoRA further quantizes base model to 4-bit NormalFloat for memory efficiency, allowing fine-tuning 65B models on single 48GB GPU.
