@@ -80,7 +80,7 @@ uvicorn api:app --reload
 ### 5. Health Check
 ![Health](images/05-health-api.png)
 
-## Part 2: Embeddings & Semantic Search (25 Marks)
+## Part 2: Embeddings & Semantic Search 
 
 ### Tasks Completed
 1. **Load 5 documents** - 3 PDFs + 2 TXT in `data/`
