@@ -23,7 +23,7 @@ class EmbeddingService:
         if not clean_texts:
             return []
 
-        # Now batch will not crash
+        
         vectors = self.model.encode(
             clean_texts,
             normalize_embeddings=True,

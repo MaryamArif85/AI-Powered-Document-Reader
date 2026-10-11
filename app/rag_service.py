@@ -30,7 +30,6 @@ class RAGService:
         if self.store.count() == 0:
             raise RuntimeError("ChromaDB is empty. Run ingest.py first.")
 
-        # Clean surrogates - your 1159 fix
         clean_q = question.encode('utf-8','ignore').decode('utf-8','ignore')
         query_embedding = self.embedder.embed_one(clean_q)
 
@@ -38,14 +37,28 @@ class RAGService:
         retrieved = self.store.query(query_embedding=query_embedding, top_k=top_k or settings.top_k, where=where)
         context = self.build_context(retrieved)
 
-        # NOW USE YOUR PROMPT_SERVICE WITH STYLE!
         prompt = self.prompt_service.build_prompt(question=question, context=context, style=style)
-
         answer = self.grok.generate(prompt)
 
         sources = []
-        for result in retrieved:
+        for idx, result in enumerate(retrieved, start=1):
             metadata = result["metadata"]
-            sources.append({"source": metadata.get("source", "unknown"), "page": metadata.get("page", 0), "chunk": metadata.get("chunk", 0), "distance": result["distance"], "text": result["text"]})
+            dist = float(result["distance"])
+            # Chroma cosine: distance 0 = 100% similar, 1 = 0%, 2 = opposite
+            # similarity = 1 - distance for cosine, convert to %
+            similarity = round((1 - dist) * 100, 2) if dist <= 1 else round(max(0, (2-dist)/2*100), 2)
 
-        return {"question": question, "answer": answer, "sources": sources, "style": style}
+            sources.append({
+                "id": idx,
+                "source": metadata.get("source", "unknown"),
+                "page": metadata.get("page", 0),
+                "chunk": metadata.get("chunk", 0),
+                "chunk_id": result.get("id"),
+                "distance": round(dist, 4),
+                "similarity_score": similarity,
+                "text": result["text"],
+                "preview": result["text"][:300] + "...",
+                "citation": f"[{idx}] {metadata.get('source')} p.{metadata.get('page',0)} (Sim: {similarity}%, Dist: {dist:.4f})"
+            })
+
+        return {"question": question, "answer": answer, "sources": sources, "style": style, "context_used": context}

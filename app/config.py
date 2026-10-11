@@ -6,11 +6,11 @@ load_dotenv()
 
 @dataclass(frozen=True)
 class Settings:
-    # NEW - Groq for gpt-oss-20b
+    #  Groq for gpt-oss-20b
     groq_api_key: str = os.getenv("GROQ_API_KEY", "")
     groq_model: str = os.getenv("GROQ_MODEL", "openai/gpt-oss-20b")
 
-    # Keep XAI as alias for backward compat (so old code doesn't break)
+
     @property
     def xai_api_key(self) -> str:
         return self.groq_api_key

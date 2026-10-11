@@ -24,7 +24,7 @@ Rules:
 Answer:"""
 
         elif style == "few_shot":
-            # EXAMPLES MUST MATCH YOUR DOMAIN: ML, DL, Green Solutions
+            
             return f"""You answer questions based on technical documents. Follow the example format exactly - cite filename.
 
 Example 1 - Deep Learning:

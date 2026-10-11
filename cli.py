@@ -21,7 +21,7 @@ def main() -> None:
         if not question:
             continue
         try:
-            # NOW WITH STYLE
+            
             result = rag.ask(question=question, style=args.style)
             print(f"\nANSWER [{result.get('style')}]")
             print(result["answer"])

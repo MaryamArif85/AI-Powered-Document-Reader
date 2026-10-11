@@ -34,3 +34,7 @@ Dataset/
 
 .hf_cache/
 wandb/
+chroma_db/
+__pycache__/
+.env
+venv/

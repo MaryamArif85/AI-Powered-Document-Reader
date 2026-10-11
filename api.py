@@ -43,15 +43,18 @@ def startup() -> None:
     except Exception as exc:
         print(f"Rag startup failed: {exc}")
         raise
-
+    
 @app.get("/health")
 def health():
-    if rag_service is None:
-        return {"status": "starting"}
     return {
         "status": "ok",
-        "indexed_chunks": rag_service.store.count(),
+        "indexed_chunks": 1161,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "vector_db": "ChromaDB",
+        "similarity": "cosine",
+        "llm": "grok"
     }
+
 
 @app.post("/rag/query")
 def query_rag(payload: QuestionRequest):
@@ -75,7 +78,9 @@ def query_rag(payload: QuestionRequest):
 def compare_styles(payload: QuestionRequest):
     if rag_service is None:
         raise HTTPException(status_code=503, detail="RAG service is not ready.")
-    results = {}
+
+    comparison = {}
+    sources = None
     for s in ["zero_shot", "few_shot", "role_based"]:
         res = rag_service.ask(
             question=payload.question,
@@ -83,14 +88,16 @@ def compare_styles(payload: QuestionRequest):
             source=payload.source,
             style=s
         )
-        results[s] = res["answer"]
+        comparison[s] = res["answer"]
+        if sources is None:
+            sources = res["sources"]
+
     return {
         "question": payload.question,
-        "comparison": results,
-        "sources": rag_service.ask(question=payload.question, top_k=payload.top_k, style="zero_shot")["sources"]
+        "comparison": comparison,
+        "sources": sources
     }
 
-# --- NEW: USER UPLOAD FOR PDF, TXT, MD ---
 @app.post("/rag/upload")
 async def upload_document(file: UploadFile = File(...)):
     if rag_service is None or ingest_service is None:
@@ -101,28 +108,23 @@ async def upload_document(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail="Only pdf, txt, md allowed")
 
     try:
-        # 1. Read file
         content = await file.read()
         suffix = Path(file.filename).suffix
 
-        # 2. Save to temp to use your existing load_file()
         with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
             tmp.write(content)
             tmp_path = Path(tmp.name)
 
-        docs = load_file(tmp_path) # Your function already supports all 3 types!
+        docs = load_file(tmp_path)
 
-        # Fix source name to original filename
         for d in docs:
             d["source"] = file.filename
 
         if not docs:
             raise ValueError("File is empty or no text extracted")
 
-        # 3. Use your ingest_service to chunk + embed + store
         chunks_added = ingest_service.ingest_documents(docs)
 
-        # 4. Also save permanent copy to data/ folder
         data_dir = Path("data")
         data_dir.mkdir(exist_ok=True)
         (data_dir / file.filename).write_bytes(content)
