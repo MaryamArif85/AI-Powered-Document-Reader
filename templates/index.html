@@ -1,48 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Document Reader - RAG</title>
-<link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-<div class="container">
-  <div class="header">
-    <h1>📄 AI Document Reader <span style="color:#7c3aed">RAG</span></h1>
-    <div id="health" class="badge">Loading...</div>
-  </div>
-
-  <div class="card">
-    <h3>Upload Documents (PDF, TXT, MD)</h3>
-    <div class="upload-zone" id="drop">
-      <p>Drag & Drop or Click to Upload</p>
-      <small>Supports .pdf, .txt, .md</small>
-      <input type="file" id="fileInput" hidden accept=".pdf,.txt,.md">
-    </div>
-    <div id="uploadResult"></div>
-  </div>
-
-  <div class="card">
-    <h3>Ask Your Documents</h3>
-    <input id="question" class="input" placeholder="e.g. What is perceptron in deep learning?">
-    <div class="row">
-      <select id="style" class="input" style="max-width:220px">
-        <option value="zero_shot">zero_shot - concise</option>
-        <option value="few_shot">few_shot - with citations</option>
-        <option value="role_based">role_based - analyst</option>
-      </select>
-      <button class="btn" onclick="ask()">Ask</button>
-      <button class="btn btn-secondary" onclick="compare()">Compare 3 Styles</button>
-    </div>
-  </div>
-
-  <div id="results"></div>
-</div>
-<script src="/static/script.js"></script>
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,14 +27,12 @@
       <button class="btn btn-secondary" onclick="compare()">Compare 3 Styles</button>
     </div>
     
-    <!-- Toggle for upload -->
-    <div class="toggle-wrap">
-      <label class="toggle">
-        <input type="checkbox" id="showUpload" onchange="toggleUpload()">
-        <span>📎 Use your own documents?</span>
-      </label>
-    </div>
-  </div>
+<div style="margin-top: 35px; margin-bottom: 5px; padding-top: 15px; border-top: 1px solid #2a2a4a;">
+  <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; color: #ccc;">
+    <input type="checkbox" id="showUpload" onchange="toggleUpload()" style="width:22px; height:22px; accent-color:#8b5cf6; cursor:pointer;">
+    <span style="font-size:15px; font-weight:500;">Use your own documents?</span>
+  </label>
+</div>
 
   <!-- Upload - Hidden by default -->
   <div class="card" id="uploadCard" style="display:none">

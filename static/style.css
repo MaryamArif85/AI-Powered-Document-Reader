@@ -55,3 +55,9 @@ body{background:#0f0f12;color:#e5e5e5;min-height:100vh}
 .source b{color:#e5e5e5}
 .sim{color:#7c3aed;font-weight:600}
 .source-top{background:#1a1628;border-color:#3a2a6a}
+
+#showUpload {
+  width: 22px !important;
+  height: 22px !important;
+  accent-color: #8b5cf6 !important;
+}
