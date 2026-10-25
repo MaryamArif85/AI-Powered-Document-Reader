@@ -146,6 +146,6 @@ Model: Groq `openai/gpt-oss-20b`
 - Health shows 1161 chunks indexed from 5 docs
 - Compare feature proves prompting difference with same semantic retrieval
 - Sources with file name + page + chunk + similarity % + distance + preview
-- Toggle for custom docs - satisfies bonus requirement
+- Toggle for custom docs 
 - Fully grounded answers - reduces hallucination via RAG
 
